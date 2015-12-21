@@ -20,6 +20,10 @@
   [s]
   (.. s (split "") (reverse) (join "")))
 
+(defn- replace-all
+  [s re replacement]
+  (.replace s (js/RegExp. (.-source re) "g") replacement))
+
 (defn replace
   "Replaces all instance of match with replacement in s.
    match/replacement can be:
@@ -27,11 +31,16 @@
    string / string
    pattern / (string or function of match)."
   [s match replacement]
-  (cond (string? match)
-        (.replace s (js/RegExp. (gstring/regExpEscape match) "g") replacement)
-        (.hasOwnProperty match "source")
-        (.replace s (js/RegExp. (.-source match) "g") replacement)
-        :else (throw (str "Invalid match arg: " match))))
+  (cond
+    (string? match)
+    (.replace s (js/RegExp. (gstring/regExpEscape match) "g") replacement)
+
+    (instance? js/RegExp match)
+    (if (string? replacement)
+      (replace-all s match replacement)
+      (replace-all s match (replace-with replacement)))
+
+    :else (throw (str "Invalid match arg: " match))))
 
 (defn replace-first
   "Replaces the first instance of match with replacement in s.
