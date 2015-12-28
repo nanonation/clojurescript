@@ -1,7 +1,7 @@
-(defproject org.clojure/clojurescript "0.0-SNAPSHOT"
+(defproject net.nanonation/clojurescript "0.0-2030-SNAPSHOT"
   :description "ClojureScript compiler and core runtime library"
   :parent [org.clojure/pom.contrib "0.1.2"]
-  :url "https://github.com/clojure/clojurescript"
+  :url "https://github.com/nanonation/clojurescript"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :jvm-opts ^:replace ["-Xmx512m" "-server"]
